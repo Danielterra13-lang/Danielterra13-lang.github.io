@@ -154,7 +154,7 @@ const PROJETOS = [
     destaque: false,
     imagem: "img/nba.jpg",
     resumo:
-      "Estatísticas de todos os jogadores da temporada, filtráveis por time, com o visual se adaptando às cores de cada franquia. Coleta em Python, banco em esquema estrela no Supabase e front consultando a API direto.",
+      "Estatísticas de todos os jogadores da temporada, filtráveis por time, com o painel inteiro mudando para as cores de cada franquia. Coleta em Python, banco em esquema estrela no Supabase e front consultando a API direto.",
     numero: { valor: "30", rotulo: "times" },
     stack: ["Python", "nba_api", "Supabase", "PostgreSQL", "Plotly.js"],
     links: {
@@ -167,14 +167,18 @@ const PROJETOS = [
     decisoes: [
       { t: "Esquema estrela com campo de temporada já na fato", d: "Adicionar outra temporada é rodar a coleta de novo, não redesenhar o banco." },
       { t: "Front direto no Supabase, sem backend", d: "Só funciona com segurança porque a chave do navegador é só leitura via Row Level Security." },
+      { t: "Fundo de cada time gerado com color-mix", d: "Uma fórmula mistura a cor secundária da franquia com branco e serve para 29 times. O Nets, que tem branco como secundária, ganhou um tema escuro próprio." },
+      { t: "Quadra mostra volume, não posição de arremesso", d: "A API não informa de onde saiu cada cesta, só o total por tipo. Em vez de inventar posição, o gráfico mostra garrafão e área do arco com intensidade pelo peso de 2PT, 3PT e lance livre." },
     ],
     bugs: [
       { t: "API da NBA bloqueia IP de nuvem", d: "No Colab dava timeout. É bloqueio de IP de datacenter. A coleta passou a rodar local." },
       { t: "Altura vindo como texto", d: "O campo chega como \"6-6\". Troquei pelo campo numérico em polegadas e converti para centímetros." },
       { t: "NaN não é JSON válido", d: "Jogador sem estatística quebrava o envio. Entrou uma limpeza explícita antes do upsert." },
+      { t: "Coluna nova no meio de uma view", d: "Ao incluir pontos por tipo de cesta, o Postgres recusou o CREATE OR REPLACE VIEW, que só aceita coluna nova no final. Reordenei a view." },
     ],
     resultado: [
-      "Visual que troca de cor conforme o time escolhido",
+      "Painel inteiro troca de cor conforme o time escolhido",
+      "Quebra de pontos por tipo de cesta numa quadra simplificada",
       "View no banco entrega tudo pronto, sem join no navegador",
     ],
   },
