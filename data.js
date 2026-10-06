@@ -20,7 +20,7 @@ const PERFIL = {
   whatsapp: "5531996843060",
   whatsappMensagem: "Oi, Dani! Vi seu portfólio e queria conversar.",
   resumo:
-    "Conecto dados de vendas, marketing, CS e produto para virar indicador, dashboard de diretoria e automação. Cuido do CRM, dos pipelines que alimentam ele e das rotinas que tiram trabalho manual da operação.",
+    "Atuo entre operações, dados e automação. Estruturo indicadores, construo dashboards executivos, cuido da arquitetura do CRM e automatizo processos. Na prática, pego processo complexo e transformo em fluxo simples, medido e fácil de escalar.",
 };
 
 const PROJETOS = [
