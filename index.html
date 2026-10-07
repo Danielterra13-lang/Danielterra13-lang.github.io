@@ -85,7 +85,7 @@ main{padding-block:44px 80px}
 .chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 
 /* cards */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:22px}
+.grid{display:grid;grid-auto-flow:row dense;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:22px}
 .card.big{grid-column:span 2}
 @media (max-width:1000px){.card.big{grid-column:auto}}
 .card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;text-decoration:none;transition:transform .18s,border-color .18s}
@@ -331,7 +331,7 @@ function renderInicio(){
 function renderGrid(){
   const lista = PROJETOS.filter(p => filtro === "Todos" || p.categoria === filtro);
   $("#grid").innerHTML = lista.map((p, i) => `
-    <a class="card ${i === 0 && lista.length % 3 === 2 ? "big" : ""}" href="#p-${p.id}">
+    <a class="card ${(i === 0 && lista.length % 3 !== 0) || (i === 1 && lista.length % 3 === 1) ? "big" : ""}" href="#p-${p.id}">
       <div class="media ${p.imagemFit === "contain" ? "contain" : ""}">${mediaHTML(p)}</div>
       <div class="body">
         <div class="meta mono"><span class="cat">${esc(p.categoria)}</span><span style="color:var(--muted)">${esc(p.ano)}</span></div>

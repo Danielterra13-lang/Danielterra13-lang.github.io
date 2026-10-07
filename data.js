@@ -69,6 +69,50 @@ const PROJETOS = [
     ],
   },
   {
+    id: "hubspot",
+    titulo: "Painel do funil B2G via API do HubSpot",
+    categoria: "RevOps · Automação",
+    ano: "2026",
+    destaque: true,
+    imagem: "img/hubspot.jpg",
+    imagemExtra: "img/hubspot-comunicacao.jpg",
+    resumo:
+      "O relatório semanal do time comercial saía de cinco exports manuais e de um Looker que vivia caindo. Virou uma sync diária pela API do HubSpot, uma planilha como base e um painel web com cinco abas, tudo em Google Apps Script, sem servidor e sem BI pago.",
+    numero: { valor: "5 → 0", rotulo: "exports manuais por semana" },
+    stack: ["HubSpot API", "Google Apps Script", "Google Sheets", "JavaScript", "Chart.js", "Python"],
+    links: {
+      dashboard: "https://danielterra13-lang.github.io/hubspot-pipeline-dashboard/",
+      github: "https://github.com/Danielterra13-lang/hubspot-pipeline-dashboard",
+    },
+    contexto:
+      "Antes de cada reunião semanal, alguém exportava cinco relatórios do HubSpot, colava numa planilha e abria um Looker lento. O comparativo com o mês anterior era preenchido à mão e o funil não tinha histórico: o CRM mostra como o negócio está hoje, não como estava no fim do mês passado. A primeira versão foi feita para um time B2G de verdade. Esta é uma reescrita genérica, rodando com uma base 100% sintética gerada em Python.",
+    fluxo: [
+      "HubSpot (API v3/v4)",
+      "Apps Script: sync diária",
+      "Google Sheets (5 abas + histórico)",
+      "Apps Script: Web App com cache",
+      "Painel no navegador",
+    ],
+    decisoes: [
+      { t: "Dois projetos de Apps Script separados", d: "Um Web App deixa o navegador chamar qualquer função pública. Se a sync morasse junto, quem tivesse o link poderia disparar a sincronização com as credenciais do dono. O painel só expõe a leitura." },
+      { t: "O cabeçalho da planilha é o contrato", d: "A sync preenche exatamente as colunas da linha 1, achando cada propriedade pelo rótulo. Coluna nova no painel não exige mexer no código." },
+      { t: "Histórico reconstruído pelo próprio CRM", d: "Com o histórico de propriedades, o script calcula como cada negócio estava no último dia de cada mês. Antes de confiar, reconstrói a base de hoje pelo mesmo método e compara com o dado real: de 98% a 100% de igualdade por coluna." },
+      { t: "Regras de negócio versionadas em código", d: "Cinco regras para deduplicar reuniões, leitura do texto bruto do WhatsApp (quem iniciou, se o lead respondeu, tempo de resposta em mediana) e reunião \"programada\" no passado tratada como falta." },
+      { t: "Cache em gzip no Drive", d: "O painel levava de 40 a 63 segundos para abrir. Agora o pacote de dados só é remontado quando a planilha muda, quando o painel pede outras colunas ou quando a versão do cache muda no código." },
+    ],
+    bugs: [
+      { t: "Duração que virou data de 1901", d: "O Sheets converte \"tempo na etapa\" em data. Acima de um ano, caía em 1900 e 1901, e negócios parados viravam 0,3 dia, puxando a média para baixo. Agora qualquer data antes de 1970 é lida como duração pelo texto formatado." },
+      { t: "Cache que não sabia que o código mudou", d: "A invalidação olhava só a planilha, então uma correção de cálculo ficava escondida até a sync do dia seguinte. Entrou uma chave de versão do código no cache." },
+      { t: "Foto mensal que não ia rodar", d: "A função foi parar numa sync parcial, mas o gatilho chamava outra. O dia 1 passaria sem foto. Hoje a sync completa termina chamando a foto, com nova tentativa diária e alerta por e-mail." },
+    ],
+    resultado: [
+      "Sync diária automática no lugar de cinco exports por semana",
+      "Painel abrindo em segundos, antes levava até um minuto",
+      "Comparativo com qualquer mês fechado, respeitando os filtros da tela",
+      "Demo pública com dados sintéticos, sem nenhum dado real exposto",
+    ],
+  },
+  {
     id: "eleitoral",
     titulo: "Monitoramento eleitoral com LLM",
     categoria: "IA aplicada",
